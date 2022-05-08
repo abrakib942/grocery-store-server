@@ -25,6 +25,8 @@ async function run() {
 
     const inventoryCollection = client.db("groceryItem").collection("item");
 
+    const itemCollection = client.db("groceryItem").collection("myItem");
+
     //  Inventory API
     app.get("/inventory", async (req, res) => {
       const query = {};
@@ -65,12 +67,19 @@ async function run() {
     //   res.send(result);
     // });
 
-    // myitems
-    app.get("/inventory", async (req, res) => {
+    // myItems
+
+    app.post("/myItem", async (req, res) => {
+      const addItem = req.body;
+      const result = await itemCollection.insertOne(addItem);
+      res.send(result);
+    });
+
+    app.get("/myItem", async (req, res) => {
       const email = req.query.email;
 
       const query = { email: email };
-      const cursor = inventoryCollection.find(query);
+      const cursor = itemCollection.find(query);
       const myItems = await cursor.toArray();
       res.send(myItems);
     });
