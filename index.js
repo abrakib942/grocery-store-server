@@ -66,7 +66,7 @@ async function run() {
     // });
 
     // myitems
-    app.get("/myitem", async (req, res) => {
+    app.get("/inventory", async (req, res) => {
       const email = req.query.email;
 
       const query = { email: email };
